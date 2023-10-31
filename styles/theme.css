@@ -1,13 +1,17 @@
-/* dark mode */
-
-body {
-    background-color: black;
-    color: white;
+:root {
+	--foreground-color: black;
+	--background-color: white;
+	--wrong-color: red;
 }
 
-/* light mode  */
+body {
+	background-color: var(--background-color);
+	color: var(--foreground-color);
+}
 
-/* body {
-    background-color: white;
-    color: black;
-} */
+@media (prefers-color-scheme: dark) {
+	:root {
+		--foreground-color: white;
+		--background-color: black;
+	}
+}

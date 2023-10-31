@@ -53,3 +53,226 @@ const t = [{
         code: "const btn = document.getElementById('emoji-btn');\n \n const emojis = [];\n \n \n const emojiAddFunction = async () => {\n \n let res = await fetch('https://emoji-api.com/emojis?access_key=1ce9b701f975ba7b63dd065ab1e09f26e3d1e83d')\n res = await res.json()\n \n for(let i=0 ; i<res.length ; i++){\n emojis.push(res[i].character);\n }\n }\n \n emojiAddFunction();\n \n btn.addEventListener('mouseover', () => {\n btn.innerText = emojis[Math.floor(Math.random() * emojis.length)];\n })\n \n btn.addEventListener('click', () => {\n btn.innerText = emojis[Math.floor(Math.random() * emojis.length)];\n })\n"
     }]
 }]
+
+    , e = "Enter"
+    , n = "Backspace"
+    , a = document.getElementById("terminal")
+    , r = document.getElementById("cursor")
+    , s = "------------------------------------------------"
+    , i = () => { r.parentElement === a && a.removeChild(r) }
+    , o = async t => {
+    i();
+        for (const e of t)
+        await l(e),
+        d();
+        a.appendChild(r)
+    }
+    , l = t => new Promise((e => {
+        let n = 0;
+        const a = setInterval((() => {
+            c(t[n++]),
+            n === t.length && (clearInterval(a),e())
+        }), 20)
+    }))
+    , c = t => {
+        const e = document.createElement("span");
+        e.textContent = t,
+        a.appendChild(e),
+        a.appendChild(r),
+        a.scrollTop = a.scrollHeight
+    }
+    , d = () => {
+        a.appendChild(document.createElement("br"))
+    }
+    , _ = /^[\w\d ]$/
+    , p = () => new Promise((t => {
+        let s = "";
+        const i = o => {
+            const l = o.key;
+            _.test(l) ? (s += l,
+            c(l)) : l === e && s.length > 0 ? (document.removeEventListener("keydown", i),
+            d(),
+            t(s)) : l === n && s.length > 0 && (o.preventDefault(),
+            s = s.slice(0, s.length - 1),
+            (() => {
+                a.removeChild(r);
+                const t = a.lastChild;
+                t && a.removeChild(t),
+                a.appendChild(r)
+            })())
+        };
+        l("$ "),
+        document.addEventListener("keydown", i)
+    }))
+    , u = [
+        ["stačí zadať", " "],
+        ["len", "tentoraz to myslím vážne."],
+        ["len", "posledne varovanie!"]
+    ]
+    , m = async t => {
+        await o([...t.map(((t,e) => `${e + 1}. ${t.label}`)), " "]);
+        let e = 0
+        , n = -1;
+        for (; -1 === n; ) {
+            const a = parseInt(await p());
+            if (a > 0 && a <= t.length)
+                n = a - 1;
+            else {
+                const n = u[ e++ ];
+                e %= u.length,
+                await o([" ", `${n[0]} číslo medzi 1 a ${t.length}.`, n[1], " "])
+            }
+        }
+        return t[n]
+    }
+    , f = () => {
+        a.innerHTML = ""
+    }
+    , h = document.getElementById("editor")
+    , g = document.getElementById("stats")
+    , y = 60e3
+    , b = "cursor"
+    , v = "next"
+    , E = "wrong"
+    , C = /\s/
+    , S = t => {
+        h.innerHTML = "";
+        let e = 0;
+        for (const n of t) {
+            for (const t of n) {
+                const n = document.createElement("span");
+                n.innerText = t,
+                e > 0 && n.classList.add("next"),
+                C.test(t) && n.setAttribute("data-whitespace", "true"),
+                h.appendChild(n),
+                e++
+            }
+            h.appendChild(document.createElement("br"))
+        }
+        const n = h.firstChild;
+        return n.classList.add(b),
+        n
+    }
+    , k = t => {
+        const e = ((y - t.totalTime) / 1e3).toFixed(0);
+        g.innerHTML = ["", s, `zostávajúci čas: ${e} s`, `napísané znaky: ${t.totalCharacters}`, "chyby: " + (t.totalCharacters - t.correctCharacters)].join("<br/>")
+    }
+    , R = t => (t = (t => t.trim().replace(/\t/g, " "))(t),
+    new Promise((async a => {
+        const r = t.split(/[ \t]*\r?\n/).filter((t => t.trim().length > 0)).map((t => t + " "));
+        let s = 0
+            , i = 0
+            , o = 0
+            , l = 0
+            , c = 0
+            , d = r.slice(s, 3)
+            , _ = d[o]
+            , p = S(d)
+            , u = 0
+            , m = 0
+            , f = 0
+            , h = [];
+        const g = t => {
+            p.classList.remove(b),
+            t || p.classList.add(E),
+            p = p.nextElementSibling,
+            p.classList.remove(v),
+            p.classList.add(b),
+            i++
+        }
+        , R = () => {
+            for (; i + 0 < _.length - 1 && C.test(_[i + 0]); )
+            g(!0)
+        }
+        , w = () => {
+            const t = (new Date).valueOf() -u;
+            return {
+                correctCharacters: c,
+                totalCharacters: l,
+                totalTime: t,
+                reachedTheEnd: t <= y
+            }
+        }
+        , x = () => {
+            document.removeEventListener("keydown", T),
+            clearTimeout(m),
+            clearInterval(f),
+            a(w())
+        }
+        , L = t => {
+            if (1 === t.length && i < _.length -1) {
+                0 === u && (u = (new Date).valueOf(),
+                m = setInterval(x, y),
+                f = setInterval((() => k(w())), 1e3));
+                const e = t === _[i];
+                g(e),
+                c += e ? 1 : 0,
+                l++,
+                i === _.length - 1 && o === d.length - 1 && (s < r.length - 1 ? (s += d.length,
+                    d = r.slice(s, s + 3),
+                    o = 0,
+                    i = 0,
+                    _ = d[o],
+                    p = S(d),
+                    R()) : x())
+            } else
+                i > 0 && t === n ? (p.classList.remove(b),
+                p.classList.add(v),
+                p = p.previousElementSibling,
+                p.classList.remove(E),
+                p.classList.add(b),
+                i--,
+                h[i] && c--,
+                h = h.slice(0, -1)) : i === _.length - 1 && t === e && (l++,
+                c++,
+                o < d.length - 1 && (_ = d[++o],
+                i = 0,
+                h = [],
+                p.classList.remove(b),
+                p = p.nextElementSibling?.nextElementSibling,
+                p.classList.remove(v),
+                p.classList.add(b),
+                R()));
+            k(w())
+        }
+        , T = t => {
+            const e = t.key;
+            "Tab" === e ? (L(" "),
+            L(" "),
+            t.preventDefault(),
+            t.stopPropagation()) : L(e)
+        };
+        document.addEventListener("keydown", T)
+    }
+    )))
+    , w = (t,e) => 1 === t ? "vitajte toto je key-quest :)" : e ? "lets go ! poďme ešte raz :)" : "tak nič :(, nechám ťa aj tak hrať! :)"
+    , x = async(t,e) => {
+        f(),
+        await o([`${t.label} pome nato!`, "keď budete pripravení, začnite písať!", s, " "])
+    }
+    , L = async t => {
+        const e = t.totalCharacters - t.correctCharacters
+        , n = t.totalCharacters > 0 ? t.correctCharacters / t.totalCharacters * 100 : 0
+        , a = t.correctCharacters / t.totalTime * 6e4;
+        await o([t.reachedTheEnd ? "wow, dokončili ste celý code!" : "čas vypršal!", "tu sú vaše výsledky:", s, " ", `správne znaky za minútu: ${a.toFixed(2)}`, "celkovo chyb: " + (e > 0 ? e : "žiadne chyby, w"), `presnosť: ${n.toFixed(2)}%`, " ", s, "chceťe hrať znova? (y, n)", " "])
+    };
+    (async() => {
+        let e = 1
+        , n = !0;
+        for (; ; ) {
+            f(),
+            await o([w(e, n), "prosim vyberte si jazyk na precvičenie: ", " "]);
+            const a = await m(t)
+              , r = a.files[Math.floor(Math.random() * a.files.length)];
+            await x(a, r),
+            i();
+            const s = await R(r.code);
+            h.innerHTML = "",
+            g.innerHTML = "",
+            f(),
+            await L(s),
+            n = "y" === await p(),
+            e++
+        }
+    })
+    ();
