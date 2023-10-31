@@ -1,0 +1,17 @@
+::before, ::after {
+    box-sizing: border-box;
+}
+
+html, body, div, span, ul, ol, li, table, tr, td, pre {
+    margin: 0;
+    padding: 0;
+}
+
+ul, ol {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+}

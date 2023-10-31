@@ -1,0 +1,45 @@
+html {
+    width: 100%;
+    height: 100%;
+    padding: 180px;
+    font-family: monospace;
+    font-size: 18px;
+}
+
+main {
+    height: 500px;
+}
+
+#terminal {
+    overflow-y: auto;
+    max-height: 360px;
+}
+
+@keyframes alternating-color {
+    0% {
+        color: black;
+        background-color: white;
+    }
+
+    50% {
+        color: white;
+        background-color: black;
+    }
+}
+
+.cursor {
+    animation: alternating-color;
+}
+
+.next {
+    opacity: 0.5;
+}
+
+.wrong {
+    color: red;
+}
+
+.wrong[data-whitespace] {
+    background-color: white;
+    opacity: 0.8;
+}

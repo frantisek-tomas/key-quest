@@ -1,0 +1,55 @@
+const t = [{
+   label: "python",
+   files: [{
+        path: "/linux/kernel/futex/core.py",
+        code: "def update_neighbors(self, grid):\n self.neighbors = []\n if self.row < self.total_rows - 1 and not grid[self.row + 1][self.col].is_barrier():\n self.neighbors.append(grid[self.row + 1][self.col])\n \n if self.row > 0 and not grid[self.row - 1][self.col].is_barrier():\n self.neighbors.append(grid[self.row - 1][self.col])\n \n if self.col < self.total_rows - 1 and not grid[self.row][self.col + 1].is_barrier():\n self.neighbors.append(grid[self.row][self.col + 1])\n \n if self.col > 0 and not grid[self.row][self.col - 1].is_barrier():\n self.neighbors.append(grid[self.row][self.col - 1])\n"
+   }, {
+        path: "/crypto/aegis128-core.py",
+        code: "if pygame.mouse.get_pressed()[0]:\n pos = pygame.mouse.get_pos()\n row, col = get_clicked_pos(pos, ROWS, width)\n node = grid[row][col]\n if not start and node != end:\n start = node\n start.make_start()\n \n elif not end and node != start:\n end = node\n end.make_end()\n \n elif node != end and node != start:\n node.make_barrier()\n \n elif pygame.mouse.get_pressed()[2]:\n pos = pygame.mouse.get_pos()\n row, col = get_clicked_pos(pos, ROWS, width)\n node = grid[row][col]\n node.reset()\n if node == start:\n start = None\n elif node == end:\n end = None\n"
+   }, {
+        path: "/sound/firewire/amdtp-stream.py",
+        code: "if ball.ycor() > 290:\n ball.sety(290)\n ball.dy *= -1  # Reverse the direction of ball\n winsound.PlaySound('bounce.wav', winsound.SND_ASYNC)\n \n if ball.ycor() < -290:\n ball.sety(-290)\n ball.dy *= -1\n winsound.PlaySound('bounce.wav', winsound.SND_ASYNC)\n \n # Left & Right Border\n if ball.xcor() > 390:\n score_a += 1\n pen.clear()\n pen.write('Player A: {}  Player B: {}'.format(score_a, score_b), align='center',\n font=('Courier', 24, 'normal'))  # Update score\n ball.goto(0, 0)\n ball.dx *= -1\n \n if ball.xcor() < -390:\n score_b += 1\n pen.clear()\n pen.write('Player A: {}  Player B: {}'.format(score_a, score_b), align='center',\n font=('Courier', 24, 'normal'))\n ball.goto(0, 0)\n ball.dx *= -1\n"
+   }, {
+        path: "/tensorflow/framework/combinations.py",
+        code: "def data_select(self):\n self.Data_Selection = str(self.string_var_data.get())\n print(self.Data_Selection)\n if self.Data_Selection=='Text':\n self.tk_Text_Data.select()\n self.tk_Image_Data.deselect()\n self.tk_Audio_Data.deselect()\n elif self.Data_Selection=='Image':\n self.tk_Text_Data.deselect()\n self.tk_Image_Data.select()\n self.tk_Audio_Data.deselect()\n else:\n self.tk_Text_Data.deselect()\n self.tk_Image_Data.deselect()\n self.tk_Audio_Data.select()\n \n def open_data_file(self):\n if self.Data_Selection == 'Audio':\n self.Data_Location = askopenfilename(initialdir = dir_path,title = 'Save file as',filetypes = (('WAV files','*.wav'),('all files','*.*')))\n elif self.Data_Selection == 'Image':\n self.Data_Location = askopenfilename(initialdir = dir_path,title = 'Save file as',filetypes = (('PNG files','*.png'),('all files','*.*')))\n else:\n pass\n self.tk_Data_File_Loc_Text.insert(tk.INSERT, self.Data_Location)\n"
+   }, {
+        path: "/tensorflow/core/kernels/linalg/determinant_op.py",
+        code: "def print_text_box(self, string):\n self.top = tk.Toplevel(bg='#ffc0cb')\n self.top.title('Decoded text')\n self.top.geometry('275x175')\n self.tk_toplevel_text = tk.Text(self.top ,font='25', bg='white', width=25, height=7)\n self.tk_toplevel_text.grid(row=0, column=0)\n self.tk_toplevel_text.insert(tk.INSERT, string)\n self.top.mainloop()\n \n def check_saved_password(self):\n if os.path.exists('config.dat'):\n self.string_btn_password.set('Change password')\n with open('config.dat', 'r') as myFile:\n self.saved_hash = myFile.read().split('\n')[0]\n return True\n else:\n self.string_btn_password.set('Enter password')\n self.saved_hash = None\n return False\n"
+   }]
+}, {
+    label: "c++",
+    files: [{
+        path: "/linux/kernel/futex/core.cpp",
+        code: "#include <iostream>\n #include <string>\n #include <conio.h>\n #include <time.h>\n #include <Windows.h>\n using namespace std;\n \n double b;\n double h;\n \n void F_First();\n void F_Second();\n \n class Shape\n {\n protected:\n double base;\n double height;\n \n public:\n void get_data(double base, double height)\n {\n this->base = base;\n this->height = height;\n }\n void virtual display_area() = 0;\n };\n"
+    }, {
+        path: "/drivers/base/bus.cpp",
+        code: "class Triangle : public Shape\n {\n public:\n void display_area()\n {\n cout << 'Area of triangle: ' << 0.5 * base * height << endl;\n }\n };\n \n class Rectanglee : public Shape\n {\n public:\n void display_area()\n {\n cout << 'Area of Rectangle: ' << base * height << endl;\n }\n };\n \n class Circle : public Shape\n {\n public:\n void display_area()\n { cout << 'Area of Circle: ' << base * base * 3.1415 << endl;\n }\n };\n"
+    }, {
+        path: "/sound/firewire/amdtp-stream.cpp",
+        code: "private:\n double height;\n double width;\n \n public:\n Rectangle()\n {\n height = 5;\n width = 5;\n }\n \n Rectangle(double height2, double width2)\n {\n height = height2;\n width = width2;\n }\n void setHeight(double a)\n {\n height = a;\n }\n double getHeight()\n {\n return height;\n }\n void setWidth(double b)\n {\n width = b;\n }\n double getWidht()\n {\n return width;\n }\n double getArea()\n {\n return width * height;\n }\n double getPerimeter()\n {\n return 2 * (width + height);\n }\n };\n"
+    }, {
+        path: "/tensorflow/core/grappler/graph_topology_view.cpp",
+        code: "int main()\n {\n \n string user_choise;\n main_menu_view();\n cin >> user_choise;\n \n // main_menu_validation_check\n if (user_choise == '1')\n {\n system('cls');\n int x;\n cout << 'Input Age: ';\n cin >> x;\n Person person1, person2(x);\n person1.Display();\n cout << endl;\n person2.Display();\n }\n else if (user_choise == '2')\n {\n system('cls');\n cout << 'Records: ' << endl;\n string name;\n float salary;\n string date_of_birth;\n cout << 'Name: ';\n cin >> name;\n cout << 'Salary: ';\n cin >> salary;\n cout << 'Date of birth: ';\n cin >> date_of_birth;\n \n Records record1, record2(name, salary, date_of_birth);\n record1.Display();\n record2.Display();\n cout << endl;\n \n Records *ptr = &record1;\n ptr->alert_name();\n ptr->alert_salary();\n ptr->alert_date();\n \n record1.Display();\n record2.Display();\n }\n"
+    }, {
+        path: "/tensorflow/core/common_runtime.cpp",
+        code: "public:\n Typist()\n {\n speed = 0;\n }\n void getdata()\n {\n Staff::getdata_code();\n Staff::getdata_name();\n cout << ' Enter the speed (wprds/min): ';\n cin >> speed;\n }\n void showdata()\n {\n Staff::showdata_code();\n Staff::showdata_name();\n cout << ' Speed (words/min): ' << speed << endl;\n }\n };\n \n class Regular_Typist : public Typist\n {\n protected:\n float monthly_salary;\n \n public:\n Regular_Typist()\n {\n monthly_salary = 0.0;\n }\n void getdata()\n {\n Typist::getdata();\n cout << ' Enter the monthly salary: ';\n cin >> monthly_salary;\n }\n void showdata()\n {\n Typist::showdata();\n cout << ' Monthly salary: ' << monthly_salary << endl;\n }\n };\n"
+    }]
+}, {
+    label: "javascript",
+    files: [{
+        path: "/drivers/base/bus.js",
+        code: "function calculate(){\n let p =document.getElementById('p').value;\n let c =document.getElementById('c').value;\n let d =document.getElementById('d').value;\n let f =document.getElementById('f').value;\n const sum=parseFloat(p)+parseFloat(c)+parseFloat(d)+parseFloat(f)\n \n document.getElementById('demo').innerHTML= `Your Total marks is = ${sum}`;\n const percentage= (sum/400)*100;\n \n document.getElementById('demo1').innerHTML= `Your Marks Percentage is = ${percentage}%`;\n \n if(percentage>=90){\n document.getElementById('demo2').innerHTML= `Your Grade is A++`;\n }\n else if(percentage>=80){\n document.getElementById('demo2').innerHTML= `Your Grade is A`;\n }\n else if(percentage>=60){\n document.getElementById('demo2').innerHTML= `Your Grade is B++`;\n }\n else if(percentage>=40){\n document.getElementById('demo2').innerHTML= `Your Grade is B`;\n }\n else{\n document.getElementById('demo2').innerHTML= `You have failed !!`;\n }\n }\n"
+    }, {
+        path: "/packages/react-dom/src/server.js",
+        code: "const container = document.querySelector('.container'),\n searchInput = container.querySelector('input'),\n sound = document.getElementById('sound');\n (infoText = container.querySelector('.info-text')),\n (removeIcon = container.querySelector('.search span'));\n let audio;\n \n function data(result, word) {\n if (result.title) {\n infoText.innerHTML = `Oops ;) we can't find <span>'${word}'</span>.`;\n } else {\n container.classList.add('active');\n let definitions = result[0].meanings[0].definitions[0];\n phontetics = `${result[0].meanings[0].partOfSpeech}  /${result[0].phonetics[0].text}/`;\n document.querySelector('.word p').innerText = result[0].word;\n document.querySelector('.word span').innerText = phontetics;\n document.querySelector('.meaning span').innerText = definitions.definition;\n audio = new Audio(result[0].phonetics[0].audio);\n }\n }\n"
+    }, {
+        path: "/tensorflow/core/common_runtime/gpu.js",
+        code: "function fetchApi(word) {\n container.classList.remove('active');\n infoText.innerHTML = `Searching :) `;\n let url = `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`;\n fetch(url)\n .then((response) => response.json())\n .then((result) => data(result, word))\n .catch(() => {\n infoText.innerHTML = `Oops ;) we can't find <span>'${word}'</span>.`;\n });\n }\n \n searchInput.addEventListener('keyup', (e) => {\n let word = e.target.value.replace(/\s+/g, '');\n if (e.key == 'Enter' && word) {\n fetchApi(word);\n }\n });\n"
+    }, {
+        path: "/drivers/base/bus.js",
+        code: "function renderFrame() {\n analayzer.getByteFrequencyData(frequencyData);\n \n for (let i = 0; i < Bar_number; i++) {\n const index = (i + 10) * 2;\n \n const fd = frequencyData[index];\n \n const bar = document.querySelector('#bar' + i);\n if (!bar) {\n continue;\n }\n \n const barHeight = Math.max(4, fd || 0);\n bar.style.height = barHeight + 'px';\n }\n \n window.requestAnimationFrame(renderFrame);\n }\n \n renderFrame();\n \n audio.volume = 0.6;\n audio.play();\n"
+    }, {
+        path: "/tensorflow/core/common_runtime.js",
+        code: "const btn = document.getElementById('emoji-btn');\n \n const emojis = [];\n \n \n const emojiAddFunction = async () => {\n \n let res = await fetch('https://emoji-api.com/emojis?access_key=1ce9b701f975ba7b63dd065ab1e09f26e3d1e83d')\n res = await res.json()\n \n for(let i=0 ; i<res.length ; i++){\n emojis.push(res[i].character);\n }\n }\n \n emojiAddFunction();\n \n btn.addEventListener('mouseover', () => {\n btn.innerText = emojis[Math.floor(Math.random() * emojis.length)];\n })\n \n btn.addEventListener('click', () => {\n btn.innerText = emojis[Math.floor(Math.random() * emojis.length)];\n })\n"
+    }]
+}]
