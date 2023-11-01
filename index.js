@@ -1,3 +1,43 @@
+const themeToggle = document.getElementById('theme-toggle');
+const themeStylesheet = document.getElementById('theme-stylesheet');
+const rootElement = document.documentElement;
+
+themeToggle.addEventListener('click', () => {
+  if (rootElement.getAttribute('data-theme') === 'dark') {
+    rootElement.setAttribute('data-theme', 'light');
+  } else {
+    rootElement.setAttribute('data-theme', 'dark');
+  }
+  updateButtonText();
+  updateButtonStyle();
+});
+
+function updateButtonText() {
+  const currentTheme = rootElement.getAttribute('data-theme');
+  themeToggle.textContent = currentTheme === 'dark' ? 'light mode' : 'dark mode';
+}
+
+function updateButtonStyle() {
+  const currentTheme = rootElement.getAttribute('data-theme');
+  if (currentTheme === 'dark') {
+    themeToggle.style.backgroundColor = 'white';
+    themeToggle.style.color = 'black';
+  } else {
+    themeToggle.style.backgroundColor = 'black';
+    themeToggle.style.color = 'white';
+  }
+}
+
+if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+  rootElement.setAttribute('data-theme', 'dark');
+} else {
+  rootElement.setAttribute('data-theme', 'light');
+}
+
+updateButtonText();
+updateButtonStyle();
+
+
 const t = [{
    label: "python",
    files: [{
@@ -130,7 +170,7 @@ const t = [{
     }
     , h = document.getElementById("editor")
     , g = document.getElementById("stats")
-    , y = 60e3
+    , y = 30e3
     , b = "cursor"
     , v = "next"
     , E = "wrong"
