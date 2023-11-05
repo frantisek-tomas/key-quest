@@ -1,43 +1,54 @@
+// získa odkaz na prvok s id 'theme-toggle', 'theme-stylesheet' a hlavný koreň dokumentu.
 const themeToggle = document.getElementById('theme-toggle');
 const themeStylesheet = document.getElementById('theme-stylesheet');
 const rootElement = document.documentElement;
 
+// pridajte poslúchača na udalosť kliknutia na prvok 'themeToggle'.
 themeToggle.addEventListener('click', () => {
+  // ak aktuálna téma je tmavá, zmeň ju na svetlú, inak naopak.
   if (rootElement.getAttribute('data-theme') === 'dark') {
     rootElement.setAttribute('data-theme', 'light');
   } else {
     rootElement.setAttribute('data-theme', 'dark');
   }
+  // aktualizujte text tlačidla.
   updateButtonText();
+  // aktualizujte štýl tlačidla.
   updateButtonStyle();
 });
 
+// funkcia na aktualizáciu textu tlačidla podľa aktuálnej témy.
 function updateButtonText() {
   const currentTheme = rootElement.getAttribute('data-theme');
   themeToggle.textContent = currentTheme === 'dark' ? 'light mode' : 'dark mode';
 }
 
+// funkcia na aktualizáciu štýlu tlačidla podľa aktuálnej témy.
 function updateButtonStyle() {
   const currentTheme = rootElement.getAttribute('data-theme');
   if (currentTheme === 'dark') {
+    // nastavte bielu farbu pozadia a čiernu farbu textu pre tmavý režim.
     themeToggle.style.backgroundColor = 'white';
     themeToggle.style.color = 'black';
   } else {
+    // nastavte čierne farbu pozadia a bielu farbu textu pre svetlý režim.
     themeToggle.style.backgroundColor = 'black';
     themeToggle.style.color = 'white';
   }
 }
 
+// ak zariadenie preferuje tmavý farebný režim, nastavte tému na tmavý režim, inak na svetlý režim.
 if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
   rootElement.setAttribute('data-theme', 'dark');
 } else {
   rootElement.setAttribute('data-theme', 'light');
 }
 
+// aktualizujte text a štýl tlačidla pri načítaní stránky.
 updateButtonText();
 updateButtonStyle();
 
-
+// každý objekt predstavuje konkrétny programovací jazyk a obsahuje zoznam súborov s kódom.
 const t = [{
    label: "python",
    files: [{
@@ -94,225 +105,244 @@ const t = [{
     }]
 }]
 
-    , e = "Enter"
-    , n = "Backspace"
-    , a = document.getElementById("terminal")
-    , r = document.getElementById("cursor")
-    , s = "------------------------------------------------"
-    , i = () => { r.parentElement === a && a.removeChild(r) }
-    , o = async t => {
-    i();
-        for (const e of t)
-        await l(e),
-        d();
-        a.appendChild(r)
-    }
-    , l = t => new Promise((e => {
-        let n = 0;
-        const a = setInterval((() => {
-            c(t[n++]),
-            n === t.length && (clearInterval(a),e())
-        }), 20)
-    }))
-    , c = t => {
-        const e = document.createElement("span");
-        e.textContent = t,
-        a.appendChild(e),
-        a.appendChild(r),
-        a.scrollTop = a.scrollHeight
-    }
-    , d = () => {
-        a.appendChild(document.createElement("br"))
-    }
-    , _ = /^[\w\d ]$/
-    , p = () => new Promise((t => {
-        let s = "";
-        const i = o => {
-            const l = o.key;
-            _.test(l) ? (s += l,
-            c(l)) : l === e && s.length > 0 ? (document.removeEventListener("keydown", i),
-            d(),
-            t(s)) : l === n && s.length > 0 && (o.preventDefault(),
-            s = s.slice(0, s.length - 1),
-            (() => {
-                a.removeChild(r);
-                const t = a.lastChild;
-                t && a.removeChild(t),
-                a.appendChild(r)
-            })())
-        };
-        l("$ "),
-        document.addEventListener("keydown", i)
-    }))
-    , u = [
-        ["stačí zadať", " "],
-        ["len", "tentoraz to myslím vážne."],
-        ["len", "posledne varovanie!"]
-    ]
-    , m = async t => {
-        await o([...t.map(((t,e) => `${e + 1}. ${t.label}`)), " "]);
-        let e = 0
-        , n = -1;
-        for (; -1 === n; ) {
-            const a = parseInt(await p());
-            if (a > 0 && a <= t.length)
-                n = a - 1;
-            else {
-                const n = u[ e++ ];
-                e %= u.length,
-                await o([" ", `${n[0]} číslo medzi 1 a ${t.length}.`, n[1], " "])
-            }
-        }
-        return t[n]
-    }
-    , f = () => {
-        a.innerHTML = ""
-    }
-    , h = document.getElementById("editor")
-    , g = document.getElementById("stats")
-    , y = 30e3
-    , b = "cursor"
-    , v = "next"
-    , E = "wrong"
-    , C = /\s/
-    , S = t => {
-        h.innerHTML = "";
-        let e = 0;
-        for (const n of t) {
-            for (const t of n) {
-                const n = document.createElement("span");
-                n.innerText = t,
-                e > 0 && n.classList.add("next"),
-                C.test(t) && n.setAttribute("data-whitespace", "true"),
-                h.appendChild(n),
-                e++
-            }
-            h.appendChild(document.createElement("br"))
-        }
-        const n = h.firstChild;
-        return n.classList.add(b),
-        n
-    }
-    , k = t => {
-        const e = ((y - t.totalTime) / 1e3).toFixed(0);
-        g.innerHTML = ["", s, `zostávajúci čas: ${e} s`, `napísané znaky: ${t.totalCharacters}`, "chyby: " + (t.totalCharacters - t.correctCharacters)].join("<br/>")
-    }
-    , R = t => (t = (t => t.trim().replace(/\t/g, " "))(t),
-    new Promise((async a => {
-        const r = t.split(/[ \t]*\r?\n/).filter((t => t.trim().length > 0)).map((t => t + " "));
-        let s = 0
-            , i = 0
-            , o = 0
-            , l = 0
-            , c = 0
-            , d = r.slice(s, 3)
-            , _ = d[o]
-            , p = S(d)
-            , u = 0
-            , m = 0
-            , f = 0
-            , h = [];
-        const g = t => {
-            p.classList.remove(b),
-            t || p.classList.add(E),
-            p = p.nextElementSibling,
-            p.classList.remove(v),
-            p.classList.add(b),
-            i++
-        }
-        , R = () => {
-            for (; i + 0 < _.length - 1 && C.test(_[i + 0]); )
-            g(!0)
-        }
-        , w = () => {
-            const t = (new Date).valueOf() -u;
-            return {
-                correctCharacters: c,
-                totalCharacters: l,
-                totalTime: t,
-                reachedTheEnd: t <= y
-            }
-        }
-        , x = () => {
-            document.removeEventListener("keydown", T),
-            clearTimeout(m),
-            clearInterval(f),
-            a(w())
-        }
-        , L = t => {
-            if (1 === t.length && i < _.length -1) {
-                0 === u && (u = (new Date).valueOf(),
-                m = setInterval(x, y),
-                f = setInterval((() => k(w())), 1e3));
-                const e = t === _[i];
-                g(e),
-                c += e ? 1 : 0,
-                l++,
-                i === _.length - 1 && o === d.length - 1 && (s < r.length - 1 ? (s += d.length,
-                    d = r.slice(s, s + 3),
-                    o = 0,
-                    i = 0,
-                    _ = d[o],
-                    p = S(d),
-                    R()) : x())
-            } else
-                i > 0 && t === n ? (p.classList.remove(b),
-                p.classList.add(v),
-                p = p.previousElementSibling,
-                p.classList.remove(E),
-                p.classList.add(b),
-                i--,
-                h[i] && c--,
-                h = h.slice(0, -1)) : i === _.length - 1 && t === e && (l++,
-                c++,
-                o < d.length - 1 && (_ = d[++o],
-                i = 0,
-                h = [],
-                p.classList.remove(b),
-                p = p.nextElementSibling?.nextElementSibling,
-                p.classList.remove(v),
-                p.classList.add(b),
-                R()));
-            k(w())
-        }
-        , T = t => {
-            const e = t.key;
-            "Tab" === e ? (L(" "),
-            L(" "),
-            t.preventDefault(),
-            t.stopPropagation()) : L(e)
-        };
-        document.addEventListener("keydown", T)
-    }
-    )))
-    , w = (t,e) => 1 === t ? "vitajte toto je key-quest :)" : e ? "lets go ! poďme ešte raz :)" : "tak nič :(, nechám ťa aj tak hrať! :)"
-    , x = async(t,e) => {
-        f(),
-        await o([`${t.label} pome nato!`, "keď budete pripravení, začnite písať!", s, " "])
-    }
-    , L = async t => {
-        const e = t.totalCharacters - t.correctCharacters
-        , n = t.totalCharacters > 0 ? t.correctCharacters / t.totalCharacters * 100 : 0
-        , a = t.correctCharacters / t.totalTime * 6e4;
-        await o([t.reachedTheEnd ? "wow, dokončili ste celý code!" : "čas vypršal!", "tu sú vaše výsledky:", s, " ", `správne znaky za minútu: ${a.toFixed(2)}`, "celkovo chyb: " + (e > 0 ? e : "žiadne chyby, w"), `presnosť: ${n.toFixed(2)}%`, " ", s, "chceťe hrať znova? (y, n)", " "])
+// definícia rôznych premenných a konštánt, vrátane elementov DOM a klávesových skratiek.
+const e = "Enter" // klávesa Enter
+, n = "Backspace" // klávesa Backspace
+, a = document.getElementById("terminal")  // element s ID "terminal" predstavujúci terminál
+, r = document.getElementById("cursor") // element s ID "cursor" predstavujúci kurzor
+, s = "------------------------------------------------" // oddelovací reťazec
+// funkcia na odstránenie kurzoru z terminálu.
+, i = () => { r.parentElement === a && a.removeChild(r) }
+// funkcia na postupné vypisovanie textu do terminálu.
+, o = async t => {
+    i(); // odstráni kurzor
+    for (const e of t)
+    await l(e), // počka na dokončenie vypisovania textu
+    d(); // prida nový riadok
+    a.appendChild(r) // prida kurzor späť do terminálu
+}
+// funkcia pre postupné vypisovanie textu.
+, l = t => new Promise((e => {
+    let n = 0;
+    const a = setInterval((() => {
+        c(t[n++]), // vytvori nový element s textom a pridaj ho do terminálu
+        n === t.length && (clearInterval(a),e())  // signalizuj dokončenie vypisovania
+    }), 20) // rýchlosť vypisovania
+}))
+// funkcia na pridanie textu do terminálu.
+, c = t => {
+    const e = document.createElement("span");
+    e.textContent = t,
+    a.appendChild(e),
+    a.appendChild(r),
+    a.scrollTop = a.scrollHeight  // posuň terminál na koniec, aby bol viditeľný nový
+}
+// funkcia na pridanie nového riadku do terminálu.
+, d = () => {
+    a.appendChild(document.createElement("br"))
+}
+// regex pre kontrolu, či stlačená klávesa je alfanumerický znak alebo medzera.
+, _ = /^[\w\d ]$/
+// funkcia, ktorá vracia Promise pre získanie vstupu od používateľa.
+, p = () => new Promise((t => {
+    let s = "";
+    const i = o => {
+        const l = o.key;
+        _.test(l) ? (s += l,
+        c(l)) : l === e && s.length > 0 ? (document.removeEventListener("keydown", i),
+        d(),
+        t(s)) : l === n && s.length > 0 && (o.preventDefault(),
+        s = s.slice(0, s.length - 1),
+        (() => {
+            a.removeChild(r);
+            const t = a.lastChild;
+            t && a.removeChild(t),
+            a.appendChild(r)
+        })())
     };
-    (async() => {
-        let e = 1
-        , n = !0;
-        for (; ; ) {
-            f(),
-            await o([w(e, n), "prosim vyberte si jazyk na precvičenie: ", " "]);
-            const a = await m(t)
-              , r = a.files[Math.floor(Math.random() * a.files.length)];
-            await x(a, r),
-            i();
-            const s = await R(r.code);
-            h.innerHTML = "",
-            g.innerHTML = "",
-            f(),
-            await L(s),
-            n = "y" === await p(),
+    l("$ "), // vypíše prompt
+    document.addEventListener("keydown", i)
+}))
+// zoznam možných chýb pre výber textových úloh.
+, u = [
+    ["stačí zadať", " "],
+    ["len", "tentoraz to myslím vážne."],
+    ["len", "posledne varovanie!"]
+]
+// funkcia na výber textovej úlohy z daného zoznamu.
+, m = async t => {
+    await o([...t.map(((t,e) => `${e + 1}. ${t.label}`)), " "]);
+    let e = 0
+    , n = -1;
+    for (; -1 === n; ) {
+        const a = parseInt(await p());
+        if (a > 0 && a <= t.length)
+            n = a - 1;
+        else {
+            const n = u[ e++ ];
+            e %= u.length,
+            await o([" ", `${n[0]} číslo medzi 1 a ${t.length}.`, n[1], " "])
+        }
+    }
+    return t[n]
+}
+// funkcia na vyčistenie obsahu terminálu.
+, f = () => {
+    a.innerHTML = ""
+}
+// nastavenie elementov DOM a konštánt.
+, h = document.getElementById("editor")
+, g = document.getElementById("stats")
+, y = 30e3 // časový limit na písanie úloh
+, b = "cursor" // trieda pre kurzor
+, v = "next" // trieda pre nasledujúci znak
+, E = "wrong" // trieda pre chybný znak
+, C = /\s/ // regex pre prázdne znaky
+// funkcia na inicializáciu editora s textovou úlohou.
+, S = t => {
+    h.innerHTML = "";
+    let e = 0;
+    for (const n of t) {
+        for (const t of n) {
+            const n = document.createElement("span");
+            n.innerText = t,
+            e > 0 && n.classList.add("next"),
+            C.test(t) && n.setAttribute("data-whitespace", "true"),
+            h.appendChild(n),
             e++
         }
-    })
-    ();
+        h.appendChild(document.createElement("br"))
+    }
+    const n = h.firstChild;
+    return n.classList.add(b),
+    n
+}
+// funkcia na aktualizáciu štatistík počas písania.
+, k = t => {
+    const e = ((y - t.totalTime) / 1e3).toFixed(0);
+    g.innerHTML = ["", s, `zostávajúci čas: ${e} s`, `napísané znaky: ${t.totalCharacters}`, "chyby: " + (t.totalCharacters - t.correctCharacters)].join("<br/>")
+}
+// funkcia pre kontrolu priebehu písania textu a zberu štatistík.
+, R = t => (t = (t => t.trim().replace(/\t/g, " "))(t),
+new Promise((async a => {
+    const r = t.split(/[ \t]*\r?\n/).filter((t => t.trim().length > 0)).map((t => t + " "));
+    let s = 0  // indexy pre riadky a znaky v texte
+        , i = 0
+        , o = 0
+        , l = 0
+        , c = 0
+        , d = r.slice(s, 3) // začiatočné riadky
+        , _ = d[o] // začiatočný riadok
+        , p = S(d) // začiatočný prvok v editore
+        , u = 0  // časový údaj pre meranie
+        , m = 0  // interval na sledovanie času
+        , f = 0 // interval na sledovanie štatistík
+        , h = []; // pole pre uchovávanie chýb
+    const g = t => {
+        p.classList.remove(b),
+        t || p.classList.add(E),
+        p = p.nextElementSibling,
+        p.classList.remove(v),
+        p.classList.add(b),
+        i++
+    }
+    , R = () => {
+        for (; i + 0 < _.length - 1 && C.test(_[i + 0]); )
+        g(!0)
+    }
+    , w = () => {
+        const t = (new Date).valueOf() -u;
+        return {
+            correctCharacters: c,
+            totalCharacters: l,
+            totalTime: t,
+            reachedTheEnd: t <= y
+        }
+    }
+    , x = () => {
+        document.removeEventListener("keydown", T),
+        clearTimeout(m),
+        clearInterval(f),
+        a(w())
+    }
+    , L = t => {
+        if (1 === t.length && i < _.length -1) {
+            0 === u && (u = (new Date).valueOf(),
+            m = setInterval(x, y),
+            f = setInterval((() => k(w())), 1e3));
+            const e = t === _[i];
+            g(e),
+            c += e ? 1 : 0,
+            l++,
+            i === _.length - 1 && o === d.length - 1 && (s < r.length - 1 ? (s += d.length,
+                d = r.slice(s, s + 3),
+                o = 0,
+                i = 0,
+                _ = d[o],
+                p = S(d),
+                R()) : x())
+        } else
+            i > 0 && t === n ? (p.classList.remove(b),
+            p.classList.add(v),
+            p = p.previousElementSibling,
+            p.classList.remove(E),
+            p.classList.add(b),
+            i--,
+            h[i] && c--,
+            h = h.slice(0, -1)) : i === _.length - 1 && t === e && (l++,
+            c++,
+            o < d.length - 1 && (_ = d[++o],
+            i = 0,
+            h = [],
+            p.classList.remove(b),
+            p = p.nextElementSibling?.nextElementSibling,
+            p.classList.remove(v),
+            p.classList.add(b),
+            R()));
+        k(w())
+    }
+    , T = t => {
+        const e = t.key;
+        "Tab" === e ? (L(" "),
+        L(" "),
+        t.preventDefault(),
+        t.stopPropagation()) : L(e)
+    };
+    document.addEventListener("keydown", T)
+}
+)))
+// funkcia na zobrazovanie vítacích správ na základe stavu hry.
+, w = (t,e) => 1 === t ? "vitajte toto je key-quest :)" : e ? "lets go ! poďme ešte raz :)" : "tak nič :(, nechám ťa aj tak hrať! :)"
+// funkcia na začiatok hry s daným jazykom a úlohou.
+, x = async(t,e) => {
+    f(), // vyčistenie editora
+    await o([`${t.label} pome nato!`, "keď budete pripravení, začnite písať!", s, " "])
+}
+// funkcia na zobrazenie výsledkov hry.
+, L = async t => {
+    const e = t.totalCharacters - t.correctCharacters
+    , n = t.totalCharacters > 0 ? t.correctCharacters / t.totalCharacters * 100 : 0
+    , a = t.correctCharacters / t.totalTime * 6e4;
+    await o([t.reachedTheEnd ? "wow, dokončili ste celý code!" : "čas vypršal!", "tu sú vaše výsledky:", s, " ", `správne znaky za minútu: ${a.toFixed(2)}`, "celkovo chyb: " + (e > 0 ? e : "žiadne chyby, w"), `presnosť: ${n.toFixed(2)}%`, " ", s, "chceťe hrať znova? (y, n)", " "])
+};
+// hlavná asynchrónna funkcia hry.
+(async() => {
+    let e = 1  // počiatočný stav hry
+    , n = !0; // indikátor reštartovania hry
+    for (; ; ) {
+        f(),  // vyčistenie editora
+        await o([w(e, n), "prosim vyberte si jazyk na precvičenie: ", " "]);  // zobrazenie vstupnej správy
+        const a = await m(t) // výber jazyka a úlohy
+          , r = a.files[Math.floor(Math.random() * a.files.length)];  // náhodný výber úlohy
+        await x(a, r),  // začiatok úlohy
+        i(); // odstránenie kurzora
+        const s = await R(r.code);  // spustenie hry a sledovanie písania
+        h.innerHTML = "", // vyčistenie editora
+        g.innerHTML = "", // vyčistenie štatistík
+        f(), // vyčistenie editora
+        await L(s),  // zobrazenie výsledkov hry
+        n = "y" === await p(),  // reštart hry na základe vstupu hráča
+        e++
+    }
+})
+();
